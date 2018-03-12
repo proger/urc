@@ -1,0 +1,9 @@
+rewrite url Pubsub/*
+file /style.css style.css
+rewrite style Pubsub/*
+serverOnly Pubsub.submit
+safeGet Pubsub/main
+safeGet main
+
+$/list
+pubsub
