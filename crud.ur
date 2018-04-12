@@ -23,13 +23,14 @@ val string = default
 val option_string : string -> colMeta (option string, string) = default
 val time : string -> colMeta (time, string) = default
 
-fun bool name : colMeta (bool, bool) = {Nam = name,
-                 Show = txt,
-                 Widget = fn [nm :: Name] => <xml><checkbox{nm}/></xml>,
-                 WidgetPopulated = fn [nm :: Name] b =>
-                                      <xml><checkbox{nm} checked={b}/></xml>,
-                 Parse = fn x => x,
-                 Inject = _}
+fun bool name : colMeta (bool, bool) =
+    {Nam = name,
+     Show = txt,
+     Widget = fn [nm :: Name] => <xml><checkbox{nm}/></xml>,
+     WidgetPopulated = fn [nm :: Name] b =>
+                          <xml><checkbox{nm} checked={b}/></xml>,
+     Parse = fn x => x,
+     Inject = _}
 
 fun option_bool name : colMeta (option bool, bool) =
     {Nam = name,
@@ -44,7 +45,6 @@ fun option_bool name : colMeta (option bool, bool) =
 
 
 functor Make(M : sig
-
                  con cols :: {(Type * Type)}
 
                  type key_type
@@ -58,7 +58,6 @@ functor Make(M : sig
 
                  val title : string
 
-                 (* val defid : key_type *)
                  val prim_show : show key_type
                  val prim_sql_injectable : sql_injectable key_type
 
@@ -68,13 +67,11 @@ functor Make(M : sig
                  val defpage : string -> xbody -> page
 
                  type task_type
-             (* val tasks : list { Title: string, Task: key_type -> transaction page } *)
                  val runTask : task_type -> key_type -> transaction page
                  val taskTitle : task_type -> string
                  val allTasks : list task_type
 
                  val header : transaction xbody
-
              end) = struct
 
     val tab = M.tab
@@ -86,19 +83,15 @@ functor Make(M : sig
 
     val defpage = M.defpage M.title
 
-    datatype dftasks c = Update | Delete | Other of c
-
     fun commands (id: key_type) : xbody =
         let
-            (* val deftasks = Cons ({Title = "[Update]", Task = upd}, *)
-            (*                      Cons ({Title = "[Delete]", Task = confirm_delete}, *)
-            (*                            Nil)) *)
-            (* (\* val mk = fn t => <xml><a link={t.Task id}>{[t.Title]}</a></xml> *\) *)
-            (* val mk = fn t => <xml><button value={t.Title} onclick={fn _ => t.Task id} /></xml> *)
             val mk = fn t => <xml><a link={M.runTask t id}>{[M.taskTitle t]}</a></xml>
         in
-           (* List.mapX mk (List.append deftasks M.tasks) *)
-           List.mapX mk M.allTasks
+            <xml>
+              {List.mapX mk M.allTasks}
+              <a link={upd id}>[Update]</a>
+              <a link={confirm_delete id}>[Delete]</a>
+            </xml>
         end
 
     and list () =
@@ -215,8 +208,10 @@ functor Make(M : sig
         header <- M.header;
         ls <- list ();
         return (M.hdrpage M.title header <xml>
-          <h1>{cdata M.title}</h1>
+          <section>
+            <h1>{cdata M.title}</h1>
 
-          {ls}
+            {ls}
+          </section>
         </xml>)
 end

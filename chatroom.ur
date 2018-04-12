@@ -25,12 +25,14 @@ and github () =
                       | Some x => "Sign out " ^ x
     in
         return (Def.page "Urc Authentication" Def.nohdr Def.noload <xml>
-          <h1>urc</h1>
-          <form>
-            <div>
-              <submit value={title} action={action}/>
-            </div>
-          </form>
+          <section>
+            <h1>urc</h1>
+            <form>
+              <div>
+                <submit value={title} action={action}/>
+              </div>
+            </form>
+          </section>
         </xml>)
     end
 
