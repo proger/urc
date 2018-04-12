@@ -92,7 +92,7 @@ structure Admin = Crud.Make(struct
     val hdrpage = fn t h b => Def.page t h Def.noload b
 
     type task_type = {}
-    val runTask = fn _ username => redirect (bless ("https://github.com" ^ username))
+    val runTask = fn _ username => redirect (bless ("https://github.com/" ^ username))
     val taskTitle = fn _ => "[Visit]"
     val allTasks = (Cons ((), Nil))
 
