@@ -1,7 +1,3 @@
-val nohdr = <xml/>
-
-val noload = return ()
-
 fun page (ptitle : string) (hdr : xbody) (onloadf : transaction unit) (content : xbody) : page =
     <xml>
       <head>
@@ -12,11 +8,13 @@ fun page (ptitle : string) (hdr : xbody) (onloadf : transaction unit) (content :
         <header>
           {hdr}
         </header>
-        <section>
-          {content}
-        </section>
+        {content}
       </body>
     </xml>
+
+val nohdr = <xml/>
+
+val noload = return ()
 
 fun errorHandler (body : xbody) : transaction page =
     return (page "Error" nohdr noload body)
