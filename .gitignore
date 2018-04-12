@@ -1,3 +1,5 @@
 *.sqlite
 *.sql
 *.exe
+/urweb-curl
+github_app_config.ur

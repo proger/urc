@@ -1,0 +1,15 @@
+library urweb-curl/lib/urweb/ur/world
+link -Lurweb-curl/lib
+allow url https://*
+allow url http://localhost:8080/*
+allow url /Shell/main
+allow url /main
+prefix http://localhost:8080/
+
+$/char
+$/string
+$/json
+$/monad
+oauth
+github
+github_app_config

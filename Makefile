@@ -1,13 +1,13 @@
-PROJ=	$(firstword $(basename $(wildcard *.urp)))
-DB=	$(PROJ).sqlite
+PROJ=	urc
+DB=		$(PROJ).sqlite
 EXE=	./$(PROJ).exe
 
 all: $(EXE)
 
-%.sqlite: %.exe
+%.sqlite: # %.exe
 	sqlite3 $@ < $*.sql
 
-%.exe: *.ur*
+%.exe: *.ur* *.css
 	urweb -dbms sqlite -db dbname=$*.sqlite -sql $*.sql $*
 
 clean:
@@ -21,5 +21,10 @@ tc:
 
 open:
 	open http://localhost:8080/main
+
+deps: urweb-curl
+
+urweb-curl: release.nix urweb-curl.nix urweb-curl.json
+	nix-build -o $@ -A $@ release.nix
 
 .PHONY: tc run clean open

@@ -1,0 +1,16 @@
+rewrite url Chatroom/*
+file /style.css style.css
+rewrite style Chatroom/*
+serverOnly Chatroom.submit
+onError Def.errorHandler
+safeGet Chatroom/main
+safeGet main
+library github_auth
+allow url /admin
+
+$/list
+def
+db
+pubsub
+crud
+chatroom
