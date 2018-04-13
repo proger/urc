@@ -32,6 +32,9 @@ and github () =
                 <submit value={title} action={action}/>
               </div>
             </form>
+            <div>
+              {Def.spinner}
+            </div>
           </section>
         </xml>)
     end

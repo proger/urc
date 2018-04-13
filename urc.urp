@@ -1,6 +1,8 @@
 rewrite url Chatroom/*
 file /style.css style.css
+file /spinner.css spinner.css
 rewrite style Chatroom/*
+rewrite style Def/* [-]
 serverOnly Chatroom.submit
 onError Def.errorHandler
 safeGet Chatroom/main
