@@ -28,5 +28,5 @@ let
 in
 {
   release = custom-pkgs."${name}";
-  inherit (custom-pkgs) urweb-curl urweb;
+  inherit (custom-pkgs) urweb-curl urweb sqlite;
 }
