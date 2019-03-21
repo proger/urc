@@ -9,7 +9,7 @@ stdenv.mkDerivation {
   ];
 
   URWEB_INCLUDE = "${urweb}/include";
-  #URWEB_PATHS = "-path urweb-curl=${urweb-curl}";
+  URWEB_PATHS = "-path urweb-curl=${urweb-curl}";
 
   src = builtins.filterSource (p: t: p != ".git") ./.;
 }
